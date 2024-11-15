@@ -1,4 +1,4 @@
-import {qs} from "./utils.mjs";
+import { qs } from "./utils.mjs";
 
 function convertToJson(res) {
   if (res.ok) {
@@ -8,9 +8,8 @@ function convertToJson(res) {
   }
 }
 
-export default class Alert
-{
-  constructor (category){
+export default class Alert {
+  constructor(category) {
     this.category = category;
     this.path = `../json/${this.category}.json`;
   }
@@ -21,17 +20,17 @@ export default class Alert
       .then((data) => data);
   }
 
-  async renderElement(){
+  async renderElement() {
     const alerts = await this.getData();
     const section = document.createElement("section");
     const main = qs("main.divider");
     section.setAttribute("class", "alert-list");
-    alerts.forEach(alert => {
+    alerts.forEach((alert) => {
       const p = document.createElement("p");
       p.innerHTML = alert.message;
       p.style.backgroundColor = alert.background;
       p.style.color = alert.color;
-      section.appendChild(p); 
+      section.appendChild(p);
     });
     main.appendChild(section);
   }

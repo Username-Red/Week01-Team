@@ -1,7 +1,6 @@
-import { setLocalStorage, getLocalStorage, getParams } from "./utils.mjs";
+import { getLocalStorage, getParams } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
-
 
 const dataSource = new ProductData("tents");
 const parameter = getParams("product");
@@ -12,7 +11,6 @@ products.init();
 
 // console.log(blep);
 
-
 function addProductToCart(product) {
   //Clearly this function was incomplete because it would overwrite the localstorage cart
   //So let's fix it
@@ -21,7 +19,7 @@ function addProductToCart(product) {
 
   // If `cart` is not an array, reinitialize it as an empty array
   if (!Array.isArray(cart)) {
-  cart = [];
+    cart = [];
   }
 
   // Add the new product to the cart array
@@ -32,7 +30,9 @@ function addProductToCart(product) {
 }
 // add to cart button event handler
 async function addToCartHandler(e) {
-  const productss = getLocalStorage("so-cart") ? getLocalStorage("so-cart") : [];
+  const productss = getLocalStorage("so-cart")
+    ? getLocalStorage("so-cart")
+    : [];
   const product = await dataSource.findProductById(e.target.dataset.id);
   productss.push(product);
   addProductToCart(productss);
@@ -42,6 +42,3 @@ async function addToCartHandler(e) {
 document
   .getElementById("addToCart")
   .addEventListener("click", addToCartHandler);
-
-
-
