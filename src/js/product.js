@@ -4,10 +4,10 @@ import ProductDetails from "./ProductDetails.mjs";
 
 const dataSource = new ProductData("tents");
 const parameter = getParams("product");
-// const blep = await dataSource.findProductById(parameter);
 
 const products = new ProductDetails(parameter, dataSource);
 products.init();
+
 
 // console.log(blep);
 
@@ -27,6 +27,7 @@ function addProductToCart(product) {
 
   // Save the updated cart array back to localStorage
   localStorage.setItem("so-cart", JSON.stringify(cart));
+
 }
 // add to cart button event handler
 async function addToCartHandler(e) {
