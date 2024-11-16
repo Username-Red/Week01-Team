@@ -31,14 +31,38 @@ export default class ProductDetails {
     }
 
     renderProductDetails() {
-        document.querySelector(".product-detail h3").textContent = this.product.Brand.Name;
-        document.querySelector(".product-detail h2").textContent = this.product.NameWithoutBrand;
-        document.querySelector(".product-detail img").src = this.product.Image;
-        document.querySelector(".product-detail img").alt = this.product.NameWithoutBrand;
-        document.querySelector(".product-card__price").textContent = `$${this.product.SuggestedRetailPrice}`;
-        document.querySelector(".product__color").textContent = this.product.Colors[0].ColorName;
-        document.querySelector(".product__description").textContent = this.product.DescriptionHtmlSimple;
-        document.querySelector(".product-detail__add button").setAttribute("data-id", this.product.Id) ;
+        
+      if ("content" in document.createElement("template")) {
+        //Instantiate the table with the existing HTML tbody
+        //and the row with the template
+        const sectionForProduct = document.querySelector(".product-detail");
+        const template = document.querySelector(".contentHTML");
+    
+        //Clone the new row and insert it into the table
+        const clone = template.content.cloneNode(true);
+        let h3 = clone.querySelectorAll(".productName");
+        let h2 = clone.querySelectorAll(".heading2");
+        h3[0].textContent = this.product.Brand.Name;
+        h2[0].textContent = this.product.NameWithoutBrand;
+        let img = clone.querySelectorAll(".imageTent");
+        img[0].setAttribute("src", this.product.Image);
+        img[0].setAttribute("alt", this.product.NameWithoutBrand);
+        let p = clone.querySelectorAll(".parag");
+        p[0].textContent = `$${this.product.SuggestedRetailPrice}`;
+        p[1].textContent =  this.product.Colors[0].ColorName;
+        p[2].innerHTML = this.product.DescriptionHtmlSimple
+        let button = clone.querySelectorAll("#addToCart");
+        button[0].textContent = "Add to Cart";
+        button[0].setAttribute("data-id", this.product.Id)
+        
+    
+        sectionForProduct.appendChild(clone);
+    
+                
+    } else {
+        //Find another way to add the rows to the table because 
+        //the HTML template is not supported.
+    } 
        
  
     }
