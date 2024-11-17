@@ -1,48 +1,78 @@
+import { setLocalStorage, getLocalStorage } from "./utils.mjs";
+
+function productDetailsTemplate(product) {
+  return `<section class="product-detail">
+    <h3>${product.Brand.Name}</h3>
+    <h2 class="divider">${product.NameWithoutBrand}</h2>
+    <img
+      class="divider"
+      src="${product.Image}"
+      alt="${product.NameWithoutBrand}"
+    />
+    <p class="product-card__price">$${product.FinalPrice}</p>
+    <p class="product__color">${product.Colors[0].ColorName}</p>
+    <p class="product__description">
+      ${product.DescriptionHtmlSimple}
+    </p>
+    <p class="product__discount">Original Price $${(product.SuggestedRetailPrice)}</p>
+    
+    <p class="product__discount">Discount off $${(product.SuggestedRetailPrice - product.FinalPrice) }
+    <div class="product-detail__add">
+      <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
+    </div>
+  </section>`;
+}
+
 export default class ProductDetails {
-    constructor(productId,  dataSource) {
-        this.productId = productId;      // Stores the product ID
-        this.product = {};               // Will store product data once fetched
-        this.dataSource = dataSource;    // Reference to the data source for fetching details
-      }
+  constructor(productId, dataSource) {
+    this.productId = productId;
+    this.product = {};
+    this.dataSource = dataSource;
+  }
 
-      async init() {
-        // Fetch product details using the productId
-        this.product = await this.dataSource.findProductById(this.productId);
-        // Render the fetched product details
-        this.renderProductDetails();
-      }
+  async init() {
+    // Fetch the product details
+    this.product = await this.dataSource.findProductById(this.productId);
+    // Render the product details in the specified selector
+    this.renderProductDetails("main");
+    // Add event listener to the "Add to Cart" button
+    // Add the event listener after rendering
+    const addToCartButton = document.getElementById("addToCart");
+    if (addToCartButton) {
+      addToCartButton.addEventListener("click", this.addToCart.bind(this));
+    } else {
+      console.error("Add to Cart button not found in the DOM");
+    }
+  }
 
-      addProductToCart(product) {
-        //Clearly this function was incomplete because it would overwrite the localstorage cart
-        //So let's fix it
-        // Attempt to parse existing cart data or set it to an empty array if parsing fails
-        let cart = JSON.parse(localStorage.getItem("so-cart"));
- 
-        // If `cart` is not an array, reinitialize it as an empty array
-        if (!Array.isArray(cart)) {
-        cart = [];
-        }
- 
-        // Add the new product to the cart array
-        cart.push(product);
- 
-        // Save the updated cart array back to localStorage
-        localStorage.setItem("so-cart", JSON.stringify(cart));
+
+  addToCart() {
+    // Retrieve the existing cart from localStorage or set an empty array if it doesn't exist
+    let productCart = getLocalStorage("so-cart") || [];
+
+    // Ensure that productCart is always an array
+    if (!Array.isArray(productCart)) {
+      productCart = [];
     }
 
-    renderProductDetails() {
-        document.querySelector(".product-detail h3").textContent = this.product.Brand.Name;
-        document.querySelector(".product-detail h2").textContent = this.product.NameWithoutBrand;
-        document.querySelector(".product-detail img").src = this.product.Image;
-        document.querySelector(".product-detail img").alt = this.product.NameWithoutBrand;
-        document.querySelector(".product-card__price").textContent = `$${this.product.SuggestedRetailPrice}`;
-        document.querySelector(".product__color").textContent = this.product.Colors[0].ColorName;
-        document.querySelector(".product__description").textContent = this.product.DescriptionHtmlSimple;
-        document.querySelector(".product-detail__add button").setAttribute("data-id", this.product.Id) ;
-       
- 
-    }
+    // Push the new product into the cart array
+    productCart.push(this.product);
 
+    // Save the updated cart back to localStorage
+    setLocalStorage("so-cart", productCart);
 
+    // Log the cart and product for debugging
+    console.log("Updated cart:", productCart);
+    console.log("Product added:", this.product);
 
+   
+  }
+
+  renderProductDetails(selector) {
+    const element = document.querySelector(selector);
+    element.insertAdjacentHTML(
+      "afterBegin",
+      productDetailsTemplate(this.product)
+    );
+  }
 }
