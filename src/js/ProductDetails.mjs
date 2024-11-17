@@ -16,7 +16,7 @@ function productDetailsTemplate(product) {
     </p>
     <p class="product__discount">Original Price $${(product.SuggestedRetailPrice)}</p>
     
-    <p class="product__discount">Discount off $${(product.SuggestedRetailPrice - product.FinalPrice) }
+    <p class="product__discount">Discount off $${(product.SuggestedRetailPrice - product.FinalPrice).toFixed(2) }
     <div class="product-detail__add">
       <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
     </div>

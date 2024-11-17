@@ -15,10 +15,10 @@ const product = new ProductDetails(productId, dataSource);
 product.init();
 
 // Event handler to add product to cart
-function addToCartHandler(event) {
-  // Using the `addToCart` method from the `ProductDetails` class
-  product.addToCart();
-}
+// function addToCartHandler(event) {
+//   // Using the `addToCart` method from the `ProductDetails` class
+//   product.addToCart();
+// }
 
 
   // document
