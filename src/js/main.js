@@ -11,4 +11,4 @@ const main = async () => {
   const productList = new ProductListing("tents", dataSource, listElement);
   await productList.init();
 };
-
+main();
