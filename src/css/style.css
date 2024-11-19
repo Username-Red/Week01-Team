@@ -229,3 +229,25 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+.product-card__discount{
+  width: auto;
+  border-radius: 10px;
+  height: 25px;
+  background-color: blue;
+ 
+  text-align: center;
+}
+
+.product-card__disc{
+  border-radius: 10px;
+
+  text-decoration: line-through;
+  height: 35px;
+  width: auto;
+  
+}
+
+.hide {
+  display: none;
+}

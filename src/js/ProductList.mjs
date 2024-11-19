@@ -2,6 +2,11 @@ import {renderListWithTemplate} from "./utils.mjs";
 
 const unwantedList = ["Talus Tent - 3-Person, 3-Season", "Ajax Tent - 2-Person, 3-Season"]
 function productCardTemplate(product){
+  let discountMessage = '';
+  if (product.FinalPrice < product.SuggestedRetailPrice) {
+    const discountPercentage = Math.round(((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100);
+    discountMessage = `<p class="product-card__discount">Discount: ${discountPercentage}% off</p>`;
+  }
   return `
    <li class="product-card">
             <a href="product_pages/?product=${product.Id}">
@@ -11,8 +16,9 @@ function productCardTemplate(product){
               />
               <h3 class="card__brand">${product.Name.split(" ")[0]}</h3>
               <h2 class="card__name">${product.NameWithoutBrand}</h2>
-              <p class="product-card__price">$${product.FinalPrice}</p></a
-            >
+              <p class="product-card__price">$${product.FinalPrice}</p>
+              ${discountMessage}
+              </a>
           </li>
   `;
 }
