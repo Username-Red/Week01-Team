@@ -30,6 +30,7 @@ export default class Alert {
       p.innerHTML = alert.message;
       p.style.backgroundColor = alert.background;
       p.style.color = alert.color;
+      p.style.padding = "1rem";
       section.appendChild(p);
     });
     main.appendChild(section);

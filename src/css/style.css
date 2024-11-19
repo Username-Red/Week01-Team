@@ -230,7 +230,7 @@ footer {
   padding: 1em;
 }
 
-.product-card__discount{
+.product-card__discount {
   width: auto;
   border-radius: 10px;
   height: 25px;
@@ -239,13 +239,12 @@ footer {
   text-align: center;
 }
 
-.product-card__disc{
+.product-card__disc {
   border-radius: 10px;
 
   text-decoration: line-through;
   height: 35px;
   width: auto;
-  
 }
 
 .hide {
