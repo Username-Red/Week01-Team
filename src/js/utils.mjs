@@ -70,7 +70,7 @@ export async function loadTemplate(path) {
   return template;
 }
 
-export async function loadHeaderFooter(){
+export async function loadHeaderFooter(logoHref = "index.html", cartHref = "cart/index.html"){
   const headerTemp = await loadTemplate("../partials/header.html");
   const header = qs("#header");
   const footerTemp = await loadTemplate("../partials/footer.html");
@@ -78,5 +78,11 @@ export async function loadHeaderFooter(){
  
   renderWithTemplate(headerTemp.innerHTML, header);
   renderWithTemplate(footerTemp.innerHTML, footer);
+
+  const logoLink = qs(".logo a");
+  const cartLink = qs(".cart a");
+
+  if (logoLink) logoLink.href = logoHref;
+  if (cartLink) cartLink.href = cartHref;
 }
 
