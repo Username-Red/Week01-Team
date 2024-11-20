@@ -22,6 +22,8 @@ function renderCartContents() {
     productList.innerHTML = "<p>Your cart is empty.</p>";
     cartFooter.classList.add("hide");
   }
+
+  addRemoveIconListeners()
 }
 
 function cartItemTemplate(item) {
@@ -35,8 +37,31 @@ function cartItemTemplate(item) {
     <p class="cart-card__color">${item.Colors[0].ColorName}</p>
     <p class="cart-card__quantity">qty: 1</p>
     <p class="cart-card__price">$${item.FinalPrice} <br> ${(((item.SuggestedRetailPrice - item.FinalPrice) / item.SuggestedRetailPrice) * 100).toFixed(0)}% Off</p>
+    <span item-id ="${item.id}" class="remove-item">X</span>
   </li>`;
 }
 
+
+function addRemoveIconListeners() {
+  const removeIcons = document.querySelectorAll(".remove-item")
+
+  removeIcons.forEach(removeIcon => {
+    removeIcon.addEventListener("click", removeFromCart)
+  })
+}
+
+
+function removeFromCart(event){
+    const itemId = event.target.getAttribute("item-id");
+
+    let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
+
+    cart = cart.filter(item => item !== itemId);
+
+    localStorage.setItem("so-cart", JSON.stringify(cart));
+
+    renderCartContents();
+
+}
 // Render the cart contents when the page loads
 renderCartContents();
