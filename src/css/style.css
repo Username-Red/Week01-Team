@@ -30,6 +30,15 @@ header {
   justify-content: space-between;
   padding: 0 10px;
 }
+#noOfItems {
+  background-color: var(--primary-color);
+  width: 2.5vw;
+  clip-path: circle(40%);
+  text-align: center;
+  display: inline-block;
+  margin-right: -40px;
+  margin-top: -40px;
+}
 .logo {
   line-height: 60px;
   width: 245px;
@@ -219,4 +228,25 @@ button {
 footer {
   font-size: var(--small-font);
   padding: 1em;
+}
+
+.product-card__discount {
+  width: auto;
+  border-radius: 10px;
+  height: 25px;
+  background-color: blue;
+  color: white;
+  text-align: center;
+}
+
+.product-card__disc {
+  border-radius: 10px;
+
+  text-decoration: line-through;
+  height: 35px;
+  width: auto;
+}
+
+.hide {
+  display: none;
 }

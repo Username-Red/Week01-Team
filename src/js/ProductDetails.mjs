@@ -31,18 +31,15 @@ export default class ProductDetails {
     }
 
     renderProductDetails() {
-        document.querySelector(".product-detail h3").textContent = this.product.Brand.Name;
-        document.querySelector(".product-detail h2").textContent = this.product.NameWithoutBrand;
+        document.querySelector(".product-detail h3").innerHTML = this.product.Brand.Name;
+        document.querySelector(".product-detail h2").innerHTML = this.product.NameWithoutBrand;
         document.querySelector(".product-detail img").src = this.product.Image;
         document.querySelector(".product-detail img").alt = this.product.NameWithoutBrand;
-        document.querySelector(".product-card__price").textContent = `$${this.product.SuggestedRetailPrice}`;
-        document.querySelector(".product__color").textContent = this.product.Colors[0].ColorName;
-        document.querySelector(".product__description").textContent = this.product.DescriptionHtmlSimple;
+        document.querySelector(".product-card__price").innerHTML ="Now " + `$${this.product.FinalPrice}`;
+        document.querySelector(".product-card__save").innerHTML ="Save $" + (this.product.SuggestedRetailPrice - this.product.FinalPrice).toFixed(2);
+        document.querySelector(".product-card__disc").innerHTML = "Was " + `$${this.product.SuggestedRetailPrice}`;
+        document.querySelector(".product__color").innerHTML = this.product.Colors[0].ColorName;
+        document.querySelector(".product__description").innerHTML = this.product.DescriptionHtmlSimple;
         document.querySelector(".product-detail__add button").setAttribute("data-id", this.product.Id) ;
-       
- 
     }
-
-
-
 }
