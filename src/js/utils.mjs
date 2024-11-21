@@ -1,3 +1,11 @@
+
+function convertToText(res) {
+  if (res.ok) {
+    return res.text();
+  } else {
+    throw new Error("Bad Response");
+  }
+}
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
@@ -43,3 +51,38 @@ export function renderListWithTemplate(
   const htmlStrings = list.map(templateFn);
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function renderWithTemplate(
+  template,
+  parentElement,
+  position = "afterBegin",
+  data,
+  callback
+) {
+  parentElement.insertAdjacentHTML(position, template);
+  if(callback) callback(data);
+}
+
+export async function loadTemplate(path) {
+  const html = await fetch(path).then(convertToText);
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  return template;
+}
+
+export async function loadHeaderFooter(logoHref = "index.html", cartHref = "cart/index.html"){
+  const headerTemp = await loadTemplate("../partials/header.html");
+  const header = qs("#header");
+  const footerTemp = await loadTemplate("../partials/footer.html");
+  const footer = qs("#footer");
+ 
+  renderWithTemplate(headerTemp.innerHTML, header);
+  renderWithTemplate(footerTemp.innerHTML, footer);
+
+  const logoLink = qs(".logo a");
+  const cartLink = qs(".cart a");
+
+  if (logoLink) logoLink.href = logoHref;
+  if (cartLink) cartLink.href = cartHref;
+}
+
