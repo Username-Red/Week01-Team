@@ -1,7 +1,7 @@
+import Alert from "./Alert.js";
 import ProductData from "./ProductData.mjs";
 import ProductListing from "./ProductList.mjs";
-import { qs, loadHeaderFooter } from "./utils.mjs";
-import Alert from "./Alert.js";
+import { loadHeaderFooter, qs } from "./utils.mjs";
 
 loadHeaderFooter();
 
@@ -16,4 +16,22 @@ const main = async () => {
 alert.renderElement();
 main();
 
-//newsletter
+//newsletter form
+const form = document.getElementById('newsletterForm');
+
+form.addEventListener('submit',function(event){
+  event.preventDefault();
+
+  const emailInput = document.getElementById('email');
+  const email = emailInput.value;
+
+  if(!email || !email.includes('@')){
+    alert('Please enter a valid email address.');
+    return;
+  }
+  console.log('Email submitted:', email)
+
+  
+
+  alert('Thank you for subscribing to our newsletter!')
+});
