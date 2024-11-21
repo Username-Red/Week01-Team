@@ -7,7 +7,7 @@ import {
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
-loadHeaderFooter();
+loadHeaderFooter("../index.html", "../cart/");
 
 const dataSource = new ProductData("tents");
 const parameter = getParams("product");

@@ -1,13 +1,25 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, qs } from "./utils.mjs";
 
 function countCartItems() {
   const itemsInCart = getLocalStorage("so-cart");
   const totalNoOfItem = itemsInCart.length;
-  // console.log(totalNoOfItem)
 
-  const numberInHtml = document.querySelector("#noOfItems");
+  const numberInHtml = qs("#noOfItems");
 
-  numberInHtml.innerHTML = totalNoOfItem;
+  if (numberInHtml) {
+    numberInHtml.innerHTML = totalNoOfItem;
+  }
 }
 
-countCartItems();
+function waitForHeaderFooterAndCountItems() {
+  const observer = new MutationObserver(() => {
+    const numberInHtml = qs("#noOfItems");
+    if (numberInHtml) {
+      countCartItems();
+      observer.disconnect();
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
+waitForHeaderFooterAndCountItems();
