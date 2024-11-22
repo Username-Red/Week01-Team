@@ -33,7 +33,7 @@ export default class ProductDetails {
     renderProductDetails() {
         document.querySelector(".product-detail h3").innerHTML = this.product.Brand.Name;
         document.querySelector(".product-detail h2").innerHTML = this.product.NameWithoutBrand;
-        document.querySelector(".product-detail img").src = this.product.Image;
+        document.querySelector(".product-detail img").src = this.product.Images.PrimaryLarge;
         document.querySelector(".product-detail img").alt = this.product.NameWithoutBrand;
         document.querySelector(".product-card__price").innerHTML = "Now " + `$${this.product.FinalPrice}`;
         document.querySelector(".product-card__save").innerHTML = "Save $" + (this.product.SuggestedRetailPrice - this.product.FinalPrice).toFixed(2);
