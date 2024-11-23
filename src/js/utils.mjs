@@ -86,3 +86,12 @@ export async function loadHeaderFooter(logoHref = "index.html", cartHref = "cart
   if (cartLink) cartLink.href = cartHref;
 }
 
+export function changeFormAction(path = "../product-listing/index.html") {
+  const observer = new MutationObserver(() => {
+    const searchForm = document.forms.searchForm;
+    searchForm.setAttribute("action", path);
+    observer.disconnect();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
