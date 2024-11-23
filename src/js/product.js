@@ -3,13 +3,15 @@ import {
   getLocalStorage,
   getParams,
   loadHeaderFooter,
+  changeFormAction,
 } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
 loadHeaderFooter("../index.html", "../cart/");
+changeFormAction();
 
-const dataSource = new ProductData("tents");
+const dataSource = new ProductData();
 const parameter = getParams("product");
 
 const products = new ProductDetails(parameter, dataSource);
