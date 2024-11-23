@@ -1,5 +1,6 @@
 import {renderListWithTemplate, qs} from "./utils.mjs";
 
+const select = document.querySelector("select")
 // const unwantedList = ["Talus Tent - 3-Person, 3-Season", "Ajax Tent - 2-Person, 3-Season"]
 function productCardTemplate(product){
   let discountMessage = "";
@@ -32,8 +33,26 @@ export default class ProductListing {
 
   async init() {
     const list = await this.dataSource.getData(this.category);
-      this.renderList(list);
       qs(".title").innerHTML = this.category;
+      this.renderList(list);
+
+      select.addEventListener("change", () => {
+        this.listElement.innerHTML = "";
+        const option = select.value;
+    
+        //Sort items based on selected option
+        const sortedItems = [...list].sort((a, b) => {
+            if (option === "low-to-high") {
+                return a.FinalPrice - b.FinalPrice;
+            } else if (option === "a-z") {
+                return a.Name.localeCompare(b.Name)
+            }
+        })
+    
+        this.renderList(sortedItems)
+    })
+    
+
   }
   renderList(list) {
     renderListWithTemplate(productCardTemplate, this.listElement, list);
