@@ -1,6 +1,6 @@
-import {renderListWithTemplate} from "./utils.mjs";
+import {renderListWithTemplate, qs} from "./utils.mjs";
 
-const unwantedList = ["Talus Tent - 3-Person, 3-Season", "Ajax Tent - 2-Person, 3-Season"]
+// const unwantedList = ["Talus Tent - 3-Person, 3-Season", "Ajax Tent - 2-Person, 3-Season"]
 function productCardTemplate(product){
   let discountMessage = "";
   if (product.FinalPrice < product.SuggestedRetailPrice) {
@@ -9,9 +9,9 @@ function productCardTemplate(product){
   }
   return `
    <li class="product-card">
-            <a href="product_pages/?product=${product.Id}">
+            <a href="/product_pages/index.html?product=${product.Id}">
               <img
-                src=${product.Image}
+                src=${product.Images.PrimaryMedium}
                 alt="image of ${product.Name}"
               />
               <h3 class="card__brand">${product.Name.split(" ")[0]}</h3>
@@ -31,11 +31,9 @@ export default class ProductListing {
   }
 
   async init() {
-    const list = await this.dataSource.getData();
-    if(unwantedList || unwantedList.length > 0){
-      const filteredList = list.filter(elem => unwantedList.includes(elem.NameWithoutBrand) === false);
-      this.renderList(filteredList);
-    }else this.renderList(list);
+    const list = await this.dataSource.getData(this.category);
+      this.renderList(list);
+      qs(".title").innerHTML = this.category;
   }
   renderList(list) {
     renderListWithTemplate(productCardTemplate, this.listElement, list);
