@@ -1,5 +1,4 @@
 import {
-  setLocalStorage,
   getLocalStorage,
   getParams,
   loadHeaderFooter,
@@ -14,23 +13,18 @@ changeFormAction();
 const dataSource = new ExternalServices();
 const parameter = getParams("product");
 
-const products = new ProductDetails(parameter, dataSource);
-products.init();
+const productDetails = new ProductDetails(parameter, dataSource);
+productDetails.init();
 
-function addProductToCart(productss) {
-  setLocalStorage("so-cart", productss);
-}
-// add to cart button event handler
 async function addToCartHandler(e) {
   const productss = getLocalStorage("so-cart")
     ? getLocalStorage("so-cart")
     : [];
   const product = await dataSource.findProductById(e.target.dataset.id);
   productss.push(product);
-  addProductToCart(productss);
+  productDetails.addProductToCart(productss);
 }
 
-// add listener to Add to Cart button
 document
   .getElementById("addToCart")
   .addEventListener("click", addToCartHandler);

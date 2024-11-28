@@ -14,6 +14,8 @@ qs("#zip").addEventListener(
 // listening for click on the button
 qs("#checkoutSubmit").addEventListener("click", (e) => {
   e.preventDefault();
-
-  myCheckout.checkout();
+  const checkoutForm = document.forms.checkout;
+  const checkStatus = checkoutForm.checkValidity();
+  checkoutForm.reportValidity();
+  if (checkStatus) myCheckout.checkout();
 });
