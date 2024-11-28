@@ -18,7 +18,7 @@
     <main class="divider">
       <h2>Review & Place your Order</h2>
       <section class="checkout-form">
-        <form name="checkout">
+        <form name="checkout" id="checkoutForm" >
           <fieldset>
             <legend>Shipping</legend>
             <div class="checkout__name">
@@ -29,11 +29,11 @@
             </div>
             <div class="checkout__address">
               <label for="street">Street</label>
-              <input name="street" required />
+              <input name="street" required  minlength="2"/>
               <label for="city">City</label>
-              <input name="city" required />
+              <input name="city" required minlength="2"/>
               <label for="state">State</label>
-              <input name="state" required />
+              <input name="state" required minlength="2"/>
               <label for="zip">Zip</label>
               <input name="zip" id="zip" required />
             </div>
@@ -41,11 +41,11 @@
           <fieldset>
             <legend>Payment</legend>
             <label for="cardNumber">Card number</label>
-            <input name="cardNumber" required />
+            <input name="cardNumber" value="1234123412341234" required type="number" />
             <label for="expiration">Expiration</label>
-            <input name="expiration" required />
+            <input name="expiration" required minlength="2" />
             <label for="code">Security Code</label>
-            <input name="code" required />
+            <input name="code" required type="number"/>
           </fieldset>
           <fieldset class="checkout-summary">
             <legend>Order Summary</legend>
@@ -73,6 +73,7 @@
           <button id="checkoutSubmit" type="submit">Checkout</button>
         </form>
       </section>
+      <!-- <a href="./success.html">Link to Success Page</a> -->
     </main>
 
     <footer id="footer"></footer>
