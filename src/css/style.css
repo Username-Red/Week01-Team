@@ -307,3 +307,70 @@ footer {
 .hide {
   display: none;
 }
+
+.checkout-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fieldset styling */
+fieldset {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+legend {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Label styling */
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  float: left;
+}
+
+/* Input field styling */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* List styling inside order summary */
+fieldset.checkout-summary ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+fieldset.checkout-summary li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+fieldset.checkout-summary p {
+  margin: 0;
+}
+
+/* Button styling */
+button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
