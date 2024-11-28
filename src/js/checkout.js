@@ -1,3 +1,19 @@
-import { loadHeaderFooter } from "./utils.mjs";
+import { loadHeaderFooter, changeFormAction, qs } from "./utils.mjs";
+import CheckoutProcess from "./CheckoutProcess.mjs";
 
-loadHeaderFooter("index.html", "cart/");
+loadHeaderFooter("../index.html", "../cart/index.html");
+changeFormAction();
+
+const myCheckout = new CheckoutProcess("so-cart", ".checkout-summary");
+myCheckout.init();
+
+qs("#zip").addEventListener(
+  "blur",
+  myCheckout.calculateOrdertotal.bind(myCheckout),
+);
+// listening for click on the button
+qs("#checkoutSubmit").addEventListener("click", (e) => {
+  e.preventDefault();
+
+  myCheckout.checkout();
+});

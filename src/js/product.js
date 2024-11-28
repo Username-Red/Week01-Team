@@ -5,13 +5,13 @@ import {
   loadHeaderFooter,
   changeFormAction,
 } from "./utils.mjs";
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
 loadHeaderFooter("../index.html", "../cart/");
 changeFormAction();
 
-const dataSource = new ProductData();
+const dataSource = new ExternalServices();
 const parameter = getParams("product");
 
 const products = new ProductDetails(parameter, dataSource);
