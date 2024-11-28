@@ -89,9 +89,31 @@ export async function loadHeaderFooter(logoHref = "index.html", cartHref = "cart
 export function changeFormAction(path = "../product-listing/index.html") {
   const observer = new MutationObserver(() => {
     const searchForm = document.forms.searchForm;
-    searchForm.setAttribute("action", path);
-    observer.disconnect();
+    if (searchForm) { 
+      searchForm.setAttribute("action", path);
+      observer.disconnect();
+    }
   });
   observer.observe(document.body, { childList: true, subtree: true });
+}
+
+export function alertMessage(message, scroll = true) {
+  const alert = document.createElement("div");
+  const main = qs("main");
+  alert.classList.add("alert");
+  alert.innerHTML = `<p>${message}</p><span>X</span>`;
+
+  alert.addEventListener("click", function (e) {
+    if (e.target.tagName == "SPAN") {
+      main.removeChild(this);
+    }
+  });
+  main.prepend(alert);
+  if (scroll) window.scrollTo(0, 0);
+}
+
+export function removeAllAlerts() {
+  const alerts = document.querySelectorAll(".alert");
+  alerts.forEach((alert) => qs("main").removeChild(alert));
 }
 
