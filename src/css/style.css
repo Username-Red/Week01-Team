@@ -280,6 +280,15 @@ input[type="submit"]:hover {
   margin: 0;
 }
 
+.slider {
+  position: relative;
+}
+.slider img {
+  display: none;
+}
+img.displaySlide {
+  display: block;
+  
 /* ANIMATE CART ICON */
 @keyframes animateIcon {
   0% {
