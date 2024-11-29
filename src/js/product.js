@@ -3,6 +3,7 @@ import {
   getParams,
   loadHeaderFooter,
   changeFormAction,
+  qs,
 } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 import ProductDetails from "./ProductDetails.mjs";
@@ -23,6 +24,7 @@ async function addToCartHandler(e) {
   const product = await dataSource.findProductById(e.target.dataset.id);
   productss.push(product);
   productDetails.addProductToCart(productss);
+  qs(".cart a svg").classList.add("animateCartIcon");
 }
 
 document
