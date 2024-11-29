@@ -280,6 +280,16 @@ input[type="submit"]:hover {
   margin: 0;
 }
 
+.slider {
+  position: relative;
+}
+.slider img {
+  display: none;
+}
+img.displaySlide {
+  display: block;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
