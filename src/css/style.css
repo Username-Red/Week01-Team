@@ -288,6 +288,33 @@ input[type="submit"]:hover {
 }
 img.displaySlide {
   display: block;
+  
+/* ANIMATE CART ICON */
+@keyframes animateIcon {
+  0% {
+    width: 100%;
+    height: auto;
+  }
+  25% {
+    width: 105%;
+    height: auto;
+  }
+  50% {
+    width: 110%;
+    height: auto;
+  }
+  75% {
+    width: 115%;
+    height: auto;
+  }
+  100% {
+    width: 100%;
+    height: auto;
+  }
+}
+.animateCartIcon {
+  animation-name: animateIcon;
+  animation-duration: 2s;
 }
 
 @media screen and (min-width: 500px) {
