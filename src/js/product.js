@@ -18,12 +18,13 @@ const productDetails = new ProductDetails(parameter, dataSource);
 productDetails.init();
 
 async function addToCartHandler(e) {
-  const productss = getLocalStorage("so-cart")
-    ? getLocalStorage("so-cart")
-    : [];
+  // const productss = getLocalStorage("so-cart")
+  //   ? getLocalStorage("so-cart")
+  //   : [];
   const product = await dataSource.findProductById(e.target.dataset.id);
-  productss.push(product);
-  productDetails.addProductToCart(productss);
+  // console.log(product)
+  // productss.push(product);
+  productDetails.addProductToCart(product);
   qs(".cart a svg").classList.add("animateCartIcon");
 }
 
