@@ -1,3 +1,4 @@
+import {renderListWithTemplate, qs, getLocalStorage} from "./utils.mjs";
 
 const select = document.querySelector("select")
 // const unwantedList = ["Talus Tent - 3-Person, 3-Season", "Ajax Tent - 2-Person, 3-Season"]
@@ -31,6 +32,14 @@ export default class ProductListing {
   }
 
   async init() {
+    let list = []
+    if(this.category === "favorite"){
+      list = await getLocalStorage("favorite")
+      
+    }
+    else{list = await this.dataSource.getData(this.category);}
+     
+   
       qs(".title").innerHTML = this.category;
       this.renderList(list);
 

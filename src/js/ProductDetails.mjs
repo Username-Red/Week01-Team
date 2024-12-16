@@ -60,7 +60,20 @@
         qs(".product-card__disc").innerHTML = "Was " + `$${this.product.SuggestedRetailPrice}`;
         qs(".product__color").innerHTML = this.product.Colors[0].ColorName;
         qs(".product__description").innerHTML = this.product.DescriptionHtmlSimple;
-        qs(".product-detail__add button").setAttribute("data-id", this.product.Id) ;
+        qs(".product-detail__add button").setAttribute("data-id", this.product.Id);
+        qs("#addToFavorite").addEventListener("click", () =>{
+          
+          let favorites = getLocalStorage("favorite") || []
+          const existFavoriteItem = favorites.find(newItem => newItem.Id === this.product.Id)
+          if(!existFavoriteItem){
+            favorites.push(this.product)
+            setLocalStorage("favorite", favorites)
+            
+            alertMessage("Added to Favorite");
+          }
+
+          
+        }) ;
         //  console.log(this.product.Images.ExtraImages)
     }
 
