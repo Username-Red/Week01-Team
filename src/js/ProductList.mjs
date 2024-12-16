@@ -1,4 +1,3 @@
-import {renderListWithTemplate, qs} from "./utils.mjs";
 
 const select = document.querySelector("select")
 // const unwantedList = ["Talus Tent - 3-Person, 3-Season", "Ajax Tent - 2-Person, 3-Season"]
@@ -32,7 +31,6 @@ export default class ProductListing {
   }
 
   async init() {
-    const list = await this.dataSource.getData(this.category);
       qs(".title").innerHTML = this.category;
       this.renderList(list);
 
@@ -55,6 +53,9 @@ export default class ProductListing {
 
   }
   renderList(list) {
+    if(list === null || list.length === 0){
+      this.listElement.innerHTML = `<li>No item found for ${this.category}</li>`
+    }
     renderListWithTemplate(productCardTemplate, this.listElement, list);
   }
 }
