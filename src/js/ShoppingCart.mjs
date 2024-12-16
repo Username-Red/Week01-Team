@@ -43,6 +43,7 @@ export default class ShoppingCart {
       });
     } else {
       qs(this.parentSelector).innerHTML = "<p>Your cart is empty.</p>";
+      cartTotal.textContent = ""
       cartFooter.classList.add("hide");
     }
   }
