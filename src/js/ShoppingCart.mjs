@@ -9,11 +9,12 @@ function cartItemTemplate(item) {
       <h2 class="card__name">${item.Name}</h2>
     </a>
     <p class="cart-card__color">${item.Colors[0].ColorName}</p>
+
     <p class="cart-card__quantity">qty: ${item.quantity}</p>
     <p class="cart-card__price">$${item.FinalPrice} <br> ${(((item.SuggestedRetailPrice - item.FinalPrice) / item.SuggestedRetailPrice) * 100).toFixed(0)}% Off</p>
-     <button item-id ="${item.Id}" class="remove-item">Remove Item</button>
-  </li>`;
-}
+     <button class="remove-item" data-id="${item.Id}">X</button></p>
+    </li>`;
+    }
 
 // add to cart
 
@@ -54,32 +55,48 @@ export default class ShoppingCart {
 
   renderCartContents() {
 
-  const cartContainer = qs(this.parentSelector)
- 
-  const cartItems = getLocalStorage(this.key);
-  const cartFooter = qs(".cart-footer");
-  const cartTotal = qs(".cart-total");
-
-  // Check if cart items are available
-  if (cartItems && cartItems.length > 0) {
-    console.log(cartItems)
-    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-    
-   cartContainer.innerHTML = htmlItems.join("");
-
-    // Calculate the total cost of the items
-    const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
-
-    // Show the cart footer and update the total
-    cartFooter.classList.remove("hide");
-    cartTotal.textContent = `Total: $${total.toFixed(2)}`;
-  } else {
-    // Hide the cart footer if the cart is empty
-    qs(this.parentSelector).innerHTML = "<p>Your cart is empty.</p>";
-    cartFooter.classList.add("hide");
+    const cartItems = getLocalStorage(this.key);
+    const cartFooter = qs(".cart-footer");
+    const cartTotal = qs(".cart-total");
+  
+    if (cartItems && cartItems.length > 0) {
+      const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+      qs(this.parentSelector).innerHTML = htmlItems.join("");
+  
+      const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+      cartFooter.classList.remove("hide");
+      cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+  
+      // Attach event listeners for remove buttons
+      const removeButtons = document.querySelectorAll(".remove-item");
+      removeButtons.forEach(button => {
+        button.addEventListener("click", (event) => {
+          const itemId = event.target.dataset.id; // Get the item's ID
+          this.removeItem(itemId); // Call removeItem method
+        });
+      });
+    } else {
+      qs(this.parentSelector).innerHTML = "<p>Your cart is empty.</p>";
+      cartFooter.classList.add("hide");
+    }
   }
+  
 
-  removeIconListeners()
+removeItem(itemId){
+  //get current cart items from local storage
+  let cartItems = getLocalStorage(this.key);
+
+
+  //Filter out item to be removed
+  cartItems = cartItems.filter(item => item.Id !== itemId);
+  
+  //update local storage
+  localStorage.setItem(this.key, JSON.stringify(cartItems))
+
+
+  //Re-render the cart
+  this.renderCartContents()
+
 }
 
 }
