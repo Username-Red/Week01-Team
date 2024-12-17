@@ -2,7 +2,8 @@ import { getLocalStorage, qs } from "./utils.mjs";
 
 function countCartItems() {
   const itemsInCart = getLocalStorage("so-cart");
-  const totalNoOfItem = itemsInCart.length;
+  let runningQuantity = 0
+  const totalNoOfItem = itemsInCart.map(item => runningQuantity += item.quantity);
 
   const numberInHtml = qs("#noOfItems");
 

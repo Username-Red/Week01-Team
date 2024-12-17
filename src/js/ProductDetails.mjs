@@ -1,5 +1,5 @@
   import { alertMessage, getLocalStorage,qs, setLocalStorage, renderListWithTemplate } from "./utils.mjs";
-  
+ 
   // function productImageTemplate(product){  
   //   product.Images.ExtraImages.forEach(image => {
   //    `<img class="slide" src=${image.Src} alt="Image of${product.Name}">`
@@ -26,7 +26,23 @@
       }
 
       addProductToCart(product) {
-         setLocalStorage("so-cart", product);
+        let cart = getLocalStorage("so-cart") || []
+      
+        const existingItem = cart.find(newItem => newItem.Id === product.Id)
+    
+        if (existingItem){
+          existingItem.quantity = (existingItem.quantity || 1) + 1;
+      
+        }
+        else{
+          product.quantity = 1
+          cart.push(product)
+        }
+      
+        localStorage.setItem("so-cart", JSON.stringify(cart));
+      
+   
+      
          alertMessage(`${this.product.NameWithoutBrand} added to cart!`);
     }
 
@@ -40,10 +56,24 @@
         qs(".slides").prepend(newChild)
         qs(".product-card__price").innerHTML = "Now " + `$${this.product.FinalPrice}`;
         qs(".product-card__save").innerHTML = "Save $" + (this.product.SuggestedRetailPrice - this.product.FinalPrice).toFixed(2);
+
         qs(".product-card__disc").innerHTML = "Was " + `$${this.product.SuggestedRetailPrice}`;
         qs(".product__color").innerHTML = this.product.Colors[0].ColorName;
         qs(".product__description").innerHTML = this.product.DescriptionHtmlSimple;
-        qs(".product-detail__add button").setAttribute("data-id", this.product.Id) ;
+        qs(".product-detail__add button").setAttribute("data-id", this.product.Id);
+        qs("#addToFavorite").addEventListener("click", () =>{
+          
+          let favorites = getLocalStorage("favorite") || []
+          const existFavoriteItem = favorites.find(newItem => newItem.Id === this.product.Id)
+          if(!existFavoriteItem){
+            favorites.push(this.product)
+            setLocalStorage("favorite", favorites)
+            
+            alertMessage("Added to Favorite");
+          }
+
+          
+        }) ;
         //  console.log(this.product.Images.ExtraImages)
     }
 

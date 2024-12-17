@@ -9,10 +9,41 @@ function cartItemTemplate(item) {
       <h2 class="card__name">${item.Name}</h2>
     </a>
     <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-    <p class="cart-card__quantity">qty: 1</p>
-    <p class="cart-card__price">$${item.FinalPrice} <br> ${(((item.SuggestedRetailPrice - item.FinalPrice) / item.SuggestedRetailPrice) * 100).toFixed(0)}% Off
+
+    <p class="cart-card__quantity">qty: ${item.quantity}</p>
+    <p class="cart-card__price">$${item.FinalPrice} <br> ${(((item.SuggestedRetailPrice - item.FinalPrice) / item.SuggestedRetailPrice) * 100).toFixed(0)}% Off</p>
      <button class="remove-item" data-id="${item.Id}">X</button></p>
     </li>`;
+    }
+
+// add to cart
+
+
+
+
+function removeIconListeners() {
+  const removeIcons = document.querySelectorAll(".remove-item")
+
+  removeIcons.forEach(removeIcon => {
+    removeIcon.addEventListener("click", removeFromCart)
+      
+  })
+}
+
+
+function removeFromCart(event){
+    const itemId = event.target.getAttribute("item-id");
+
+    let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
+
+    cart = cart.filter(item => item.Id !== itemId);
+
+    localStorage.setItem("so-cart", JSON.stringify(cart));
+
+    // Re-render the cart
+  const shoppingCart = new ShoppingCart("so-cart", ".cart-card");
+  shoppingCart.renderCartContents();
+
 }
 
 export default class ShoppingCart {
@@ -20,7 +51,10 @@ export default class ShoppingCart {
     this.key = key;
     this.parentSelector = parentSelector;
   }
+
+
   renderCartContents() {
+
     const cartItems = getLocalStorage(this.key);
     const cartFooter = qs(".cart-footer");
     const cartTotal = qs(".cart-total");
@@ -53,13 +87,17 @@ removeItem(itemId){
   //get current cart items from local storage
   let cartItems = getLocalStorage(this.key);
 
+
   //Filter out item to be removed
   cartItems = cartItems.filter(item => item.Id !== itemId);
   
   //update local storage
   localStorage.setItem(this.key, JSON.stringify(cartItems))
 
+
   //Re-render the cart
   this.renderCartContents()
+
 }
+
 }
